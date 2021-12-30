@@ -56,6 +56,107 @@ void BestFit(int* memory, int blocksno, int* process, int prno)
         x++;
     }
 }
+void firstFit(int* memory, int blocksno, int* process, int prno)
+{
+    int* alloc = new int[prno];
+    int y = 0;
+    while (y < prno) {
+        alloc[y] = -1;
+        y++;
+    }
+
+
+    int i = 0, j = 0;
+    while (i < prno)
+    {
+        while (j < blocksno)
+        {
+            if (memory[j] >= process[i])
+            {
+                alloc[i] = j;
+                memory[j] = 0;
+                break;
+            }
+            j++;
+        }
+        i++;
+    }
+
+
+    cout << "\n Process No \t Process Size \t Block No\n";
+    int x = 0;
+    while (x < prno)
+    {
+        cout << " " << x + 1 << "\t\t";
+
+        cout << process[x] << "\t\t";
+        if (alloc[x] != -1)
+        {
+            cout << alloc[x] + 1;
+        }
+        else {
+            cout << "Not allocated";
+        }
+        cout << "\n";
+        x++;
+    }
+}
+
+void worstFit(int* memory, int blocksno, int* process, int prno)
+{
+    int* alloc = new int[prno];
+    int y = 0;
+    while (y < prno) {
+        alloc[y] = -1;
+        y++;
+    }
+
+    int i = 0;
+    while (i < prno)
+    {
+        int index = -1;
+        int j = 0;
+        while (j < blocksno)
+        {
+            if (memory[j] >= process[i])
+            {
+                if (index == -1)
+                {
+                    index = j;
+                }
+                else if (memory[index] < memory[j])
+                {
+                    index = j;
+                }
+            }
+            j++;
+        }
+        if (index != -1)
+        {
+            alloc[i] = index;
+            memory[index] = 0;
+        }
+        i++;
+    }
+
+    cout << "\n Process No \t Process Size \t Block No\n";
+    int x = 0;
+    while (x < prno)
+    {
+        cout << " " << x + 1 << "\t\t";
+
+        cout << process[x] << "\t\t";
+        if (alloc[x] != -1)
+        {
+            cout << alloc[x] + 1;
+        }
+        else {
+            cout << "Not allocated";
+        }
+        cout << "\n";
+        x++;
+    }
+}
 int main(int argc, const char* argv[]) {
 
     int blockno = 0;
